@@ -1,12 +1,16 @@
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls
+import QtQuick.Controls.Fusion
+
+
 
 Window {
     width: 320
     height: 480
     visible: true
     title: qsTr("Калькулятор")
+
+    property real buttonsTextSize: 16
 
     Rectangle {
         id: _rect1
@@ -41,112 +45,100 @@ Window {
             width: parent.width
             height: parent.height
 
-            RadioButton {
-                Layout.column: 0
-                Layout.row: 0
-                id: _rButtonIntLib
-                text: "INT"
+            Rectangle {
+                implicitWidth: (_rect2.width / 4 - 10)
+                implicitHeight: (_rect2.height / 5 - 10)
+                color: _rButtonIntLib.down ? "#3b3b3b" : "#323232"
+                border.color: "#202020"
+                border.width: 2
+                radius: 5
 
-                //onClicked: _txtInput.text += "/"
-                indicator: Rectangle {
-                    implicitWidth: 13
-                    implicitHeight: 13
-                    x: _rButtonIntLib.leftPadding
-                    y: parent.height / 2 - height / 2
-                    radius: 13
-                    border.color: _rButtonIntLib.down ? "#17a81a" : "#21be2b"
+                RadioButton {
+                    anchors.fill: parent
+                    Layout.column: 0
+                    Layout.row: 0
+                    id: _rButtonIntLib
+                    checked: true
 
-                    Rectangle {
-                        width: 7
-                        height: 7
-                        x: 3
-                        y: 3
-                        radius: 7
-                        color: _rButtonIntLib.down ? "#17a81a" : "#21be2b"
-                        visible: _rButtonIntLib.checked
+                    Text {
+                        text: "INT"
+                        color: "white"
+                        font.pixelSize: buttonsTextSize
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.verticalCenter: parent.verticalCenter
                     }
-                }
+                    onClicked: _rButtonExtLib.checked = false
 
-                contentItem: Text {
-                    text: _rButtonIntLib.text
-                    font: _rButtonIntLib.font
-                    color: _rButtonIntLib.down ? "#ffffff" : "#dddddd"
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    elide: Text.ElideRight
-                }
+                    indicator: Rectangle {
+                        implicitWidth: 13
+                        implicitHeight: 13
+                        x: _rButtonIntLib.leftPadding
+                        y: parent.height / 2 - height / 2
+                        radius: 13
+                        border.color: _rButtonIntLib.down ? "#17a81a" : "#21be2b"
 
-                background: Rectangle {
-                    implicitWidth: (_rect2.width / 4 - 10)
-                    implicitHeight: (_rect2.height / 5 - 10)
-                    color: _rButtonIntLib.down ? "#3b3b3b" : "#323232"
-                    border.color: "#202020"
-                    border.width: 1
-                    radius: 5
+                        Rectangle {
+                            width: 7
+                            height: 7
+                            x: 3
+                            y: 3
+                            radius: 7
+                            color: _rButtonIntLib.down ? "#17a81a" : "#21be2b"
+                            visible: _rButtonIntLib.checked
+                        }
+                    }
                 }
             }
 
-            RadioButton {
-                Layout.column: 1
-                Layout.row: 0
-                id: _rButtonExtLib
-                text: "EXT"
-                //onClicked: _txtInput.text += "/"
+            Rectangle {
+                implicitWidth: (_rect2.width / 4 - 10)
+                implicitHeight: (_rect2.height / 5 - 10)
+                color: _rButtonExtLib.down ? "#3b3b3b" : "#323232"
+                border.color: "#202020"
+                border.width: 2
+                radius: 5
 
-                indicator: Rectangle {
-                    implicitWidth: 13
-                    implicitHeight: 13
-                    x: _rButtonExtLib.leftPadding
-                    y: parent.height / 2 - height / 2
-                    radius: 13
-                    border.color: _rButtonExtLib.down ? "#17a81a" : "#21be2b"
+                RadioButton {
+                    anchors.fill: parent
+                    Layout.column: 1
+                    Layout.row: 0
+                    id: _rButtonExtLib
 
-                    Rectangle {
-                        width: 7
-                        height: 7
-                        x: 3
-                        y: 3
-                        radius: 7
-                        color: _rButtonExtLib.down ? "#17a81a" : "#21be2b"
-                        visible: _rButtonExtLib.checked
+                    Text {
+                        text: "EXT"
+                        color: "white"
+                        font.pixelSize: buttonsTextSize
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+                    onClicked: _rButtonIntLib.checked = false
+
+                    indicator: Rectangle {
+                        implicitWidth: 13
+                        implicitHeight: 13
+                        x: _rButtonExtLib.leftPadding
+                        y: parent.height / 2 - height / 2
+                        radius: 13
+                        border.color: _rButtonExtLib.down ? "#17a81a" : "#21be2b"
+
+                        Rectangle {
+                            width: 7
+                            height: 7
+                            x: 3
+                            y: 3
+                            radius: 7
+                            color: _rButtonExtLib.down ? "#17a81a" : "#21be2b"
+                            visible: _rButtonExtLib.checked
+                        }
                     }
                 }
-
-                contentItem: Text {
-                    text: _rButtonExtLib.text
-                    font: _rButtonExtLib.font
-                    color: _rButtonExtLib.down ? "#ffffff" : "#dddddd"
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    elide: Text.ElideRight
-                }
-
-                background: Rectangle {
-                    implicitWidth: (_rect2.width / 4 - 10)
-                    implicitHeight: (_rect2.height / 5 - 10)
-                    color: _rButtonExtLib.down ? "#3b3b3b" : "#323232"
-                    border.color: "#202020"
-                    border.width: 1
-                    radius: 5
-                }
             }
-
             Button {
                 Layout.column: 2
                 Layout.row: 0
                 id: _buttonCancel
-                text: "CE"
                 onClicked: _txtInput.text = ""
-                flat: true
-
-                contentItem: Text {
-                    text: _buttonCancel.text
-                    font: _buttonCancel.font
-                    color: _buttonCancel.down ? "#ffffff" : "#dddddd"
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    elide: Text.ElideRight
-                }
+                hoverEnabled: false
 
                 background: Rectangle {
                     implicitWidth: (_rect2.width / 4 - 10)
@@ -155,6 +147,13 @@ Window {
                     border.color: "#202020"
                     border.width: 1
                     radius: 5
+
+                    Text {
+                        text: "CE"
+                        color: "white"
+                        font.pixelSize: buttonsTextSize
+                        anchors.centerIn: parent
+                    }
                 }
             }
 
@@ -162,18 +161,8 @@ Window {
                 Layout.column: 3
                 Layout.row: 0
                 id: _buttonDev
-                text: "/"
                 onClicked: _txtInput.text += "/"
-                flat: true
-
-                contentItem: Text {
-                    text: _buttonDev.text
-                    font: _buttonDev.font
-                    color: _buttonDev.down ? "#ffffff" : "#dddddd"
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    elide: Text.ElideRight
-                }
+                hoverEnabled: false
 
                 background: Rectangle {
                     implicitWidth: (_rect2.width / 4 - 10)
@@ -182,6 +171,13 @@ Window {
                     border.color: "#202020"
                     border.width: 1
                     radius: 5
+
+                    Text {
+                        text: "/"
+                        color: "white"
+                        font.pixelSize: buttonsTextSize
+                        anchors.centerIn: parent
+                    }
                 }
             }
 
@@ -189,18 +185,8 @@ Window {
                 Layout.column: 0
                 Layout.row: 1
                 id: _button7
-                text: "7"
                 onClicked: _txtInput.text += "7"
-                flat: true
-
-                contentItem: Text {
-                    text: _button7.text
-                    font: _button7.font
-                    color: _button7.down ? "#ffffff" : "#dddddd"
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    elide: Text.ElideRight
-                }
+                hoverEnabled: false
 
                 background: Rectangle {
                     implicitWidth: (_rect2.width / 4 - 10)
@@ -209,25 +195,22 @@ Window {
                     border.color: "#202020"
                     border.width: 1
                     radius: 5
+
+                    Text {
+                        text: "7"
+                        color: "white"
+                        font.pixelSize: buttonsTextSize
+                        anchors.centerIn: parent
                     }
                 }
+            }
 
             Button {
                 Layout.column: 1
                 Layout.row: 1
                 id: _button8
-                text: "8"
                 onClicked: _txtInput.text += "8"
-                flat: true
-
-                contentItem: Text {
-                    text: _button8.text
-                    font: _button8.font
-                    color: _button8.down ? "#ffffff" : "#dddddd"
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    elide: Text.ElideRight
-                }
+                hoverEnabled: false
 
                 background: Rectangle {
                     implicitWidth: (_rect2.width / 4 - 10)
@@ -236,6 +219,13 @@ Window {
                     border.color: "#202020"
                     border.width: 1
                     radius: 5
+
+                    Text {
+                        text: "8"
+                        color: "white"
+                        font.pixelSize: buttonsTextSize
+                        anchors.centerIn: parent
+                    }
                 }
             }
 
@@ -243,18 +233,8 @@ Window {
                 Layout.column: 2
                 Layout.row: 1
                 id: _button9
-                text: "9"
                 onClicked: _txtInput.text += "9"
-                flat: true
-
-                contentItem: Text {
-                    text: _button9.text
-                    font: _button9.font
-                    color: _button9.down ? "#ffffff" : "#dddddd"
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    elide: Text.ElideRight
-                }
+                hoverEnabled: false
 
                 background: Rectangle {
                     implicitWidth: (_rect2.width / 4 - 10)
@@ -263,6 +243,13 @@ Window {
                     border.color: "#202020"
                     border.width: 1
                     radius: 5
+
+                    Text {
+                        text: "9"
+                        color: "white"
+                        font.pixelSize: buttonsTextSize
+                        anchors.centerIn: parent
+                    }
                 }
             }
 
@@ -270,18 +257,8 @@ Window {
                 Layout.column: 3
                 Layout.row: 1
                 id: _buttonMul
-                text: "*"
                 onClicked: _txtInput.text += "*"
-                flat: true
-
-                contentItem: Text {
-                    text: _buttonMul.text
-                    font: _buttonMul.font
-                    color: _buttonMul.down ? "#ffffff" : "#dddddd"
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    elide: Text.ElideRight
-                }
+                hoverEnabled: false
 
                 background: Rectangle {
                     implicitWidth: (_rect2.width / 4 - 10)
@@ -290,6 +267,13 @@ Window {
                     border.color: "#202020"
                     border.width: 1
                     radius: 5
+
+                    Text {
+                        text: "*"
+                        color: "white"
+                        font.pixelSize: buttonsTextSize
+                        anchors.centerIn: parent
+                    }
                 }
             }
 
@@ -297,18 +281,8 @@ Window {
                 Layout.column: 0
                 Layout.row: 2
                 id: _button4
-                text: "4"
                 onClicked: _txtInput.text += "4"
-                flat: true
-
-                contentItem: Text {
-                    text: _button4.text
-                    font: _button4.font
-                    color: _button4.down ? "#ffffff" : "#dddddd"
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    elide: Text.ElideRight
-                }
+                hoverEnabled: false
 
                 background: Rectangle {
                     implicitWidth: (_rect2.width / 4 - 10)
@@ -317,6 +291,13 @@ Window {
                     border.color: "#202020"
                     border.width: 1
                     radius: 5
+
+                    Text {
+                        text: "4"
+                        color: "white"
+                        font.pixelSize: buttonsTextSize
+                        anchors.centerIn: parent
+                    }
                 }
             }
 
@@ -324,18 +305,8 @@ Window {
                 Layout.column: 1
                 Layout.row: 2
                 id: _button5
-                text: "5"
                 onClicked: _txtInput.text += "5"
-                flat: true
-
-                contentItem: Text {
-                    text: _button5.text
-                    font: _button5.font
-                    color: _button5.down ? "#ffffff" : "#dddddd"
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    elide: Text.ElideRight
-                }
+                hoverEnabled: false
 
                 background: Rectangle {
                     implicitWidth: (_rect2.width / 4 - 10)
@@ -344,6 +315,13 @@ Window {
                     border.color: "#202020"
                     border.width: 1
                     radius: 5
+
+                    Text {
+                        text: "5"
+                        color: "white"
+                        font.pixelSize: buttonsTextSize
+                        anchors.centerIn: parent
+                    }
                 }
             }
 
@@ -351,18 +329,8 @@ Window {
                 Layout.column: 2
                 Layout.row: 2
                 id: _button6
-                text: "6"
                 onClicked: _txtInput.text += "6"
-                flat: true
-
-                contentItem: Text {
-                    text: _button6.text
-                    font: _button6.font
-                    color: _button6.down ? "#ffffff" : "#dddddd"
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    elide: Text.ElideRight
-                }
+                hoverEnabled: false
 
                 background: Rectangle {
                     implicitWidth: (_rect2.width / 4 - 10)
@@ -371,6 +339,13 @@ Window {
                     border.color: "#202020"
                     border.width: 1
                     radius: 5
+
+                    Text {
+                        text: "6"
+                        color: "white"
+                        font.pixelSize: buttonsTextSize
+                        anchors.centerIn: parent
+                    }
                 }
             }
 
@@ -378,18 +353,8 @@ Window {
                 Layout.column: 3
                 Layout.row: 2
                 id: _buttonMin
-                text: "-"
                 onClicked: _txtInput.text += "-"
-                flat: true
-
-                contentItem: Text {
-                    text: _buttonMin.text
-                    font: _buttonMin.font
-                    color: _buttonMin.down ? "#ffffff" : "#dddddd"
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    elide: Text.ElideRight
-                }
+                hoverEnabled: false
 
                 background: Rectangle {
                     implicitWidth: (_rect2.width / 4 - 10)
@@ -398,6 +363,13 @@ Window {
                     border.color: "#202020"
                     border.width: 1
                     radius: 5
+
+                    Text {
+                        text: "-"
+                        color: "white"
+                        font.pixelSize: buttonsTextSize
+                        anchors.centerIn: parent
+                    }
                 }
             }
 
@@ -405,18 +377,8 @@ Window {
                 Layout.column: 0
                 Layout.row: 3
                 id: _button1
-                text: "1"
                 onClicked: _txtInput.text += "1"
-                flat: true
-
-                contentItem: Text {
-                    text: _button1.text
-                    font: _button1.font
-                    color: _button1.down ? "#ffffff" : "#dddddd"
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    elide: Text.ElideRight
-                }
+                hoverEnabled: false
 
                 background: Rectangle {
                     implicitWidth: (_rect2.width / 4 - 10)
@@ -425,6 +387,13 @@ Window {
                     border.color: "#202020"
                     border.width: 1
                     radius: 5
+
+                    Text {
+                        text: "1"
+                        color: "white"
+                        font.pixelSize: buttonsTextSize
+                        anchors.centerIn: parent
+                    }
                 }
             }
 
@@ -432,18 +401,8 @@ Window {
                 Layout.column: 1
                 Layout.row: 3
                 id: _button2
-                text: "2"
                 onClicked: _txtInput.text += "2"
-                flat: true
-
-                contentItem: Text {
-                    text: _button2.text
-                    font: _button2.font
-                    color: _button2.down ? "#ffffff" : "#dddddd"
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    elide: Text.ElideRight
-                }
+                hoverEnabled: false
 
                 background: Rectangle {
                     implicitWidth: (_rect2.width / 4 - 10)
@@ -452,6 +411,13 @@ Window {
                     border.color: "#202020"
                     border.width: 1
                     radius: 5
+
+                    Text {
+                        text: "2"
+                        color: "white"
+                        font.pixelSize: buttonsTextSize
+                        anchors.centerIn: parent
+                    }
                 }
             }
 
@@ -459,18 +425,8 @@ Window {
                 Layout.column: 2
                 Layout.row: 3
                 id: _button3
-                text: "3"
                 onClicked: _txtInput.text += "3"
-                flat: true
-
-                contentItem: Text {
-                    text: _button3.text
-                    font: _button3.font
-                    color: _button3.down ? "#ffffff" : "#dddddd"
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    elide: Text.ElideRight
-                }
+                hoverEnabled: false
 
                 background: Rectangle {
                     implicitWidth: (_rect2.width / 4 - 10)
@@ -479,6 +435,13 @@ Window {
                     border.color: "#202020"
                     border.width: 1
                     radius: 5
+
+                    Text {
+                        text: "3"
+                        color: "white"
+                        font.pixelSize: buttonsTextSize
+                        anchors.centerIn: parent
+                    }
                 }
             }
 
@@ -486,18 +449,8 @@ Window {
                 Layout.column: 3
                 Layout.row: 3
                 id: _buttonPlu
-                text: "+"
                 onClicked: _txtInput.text += "+"
-                flat: true
-
-                contentItem: Text {
-                    text: _buttonPlu.text
-                    font: _buttonPlu.font
-                    color: _buttonPlu.down ? "#ffffff" : "#dddddd"
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    elide: Text.ElideRight
-                }
+                hoverEnabled: false
 
                 background: Rectangle {
                     implicitWidth: (_rect2.width / 4 - 10)
@@ -506,6 +459,13 @@ Window {
                     border.color: "#202020"
                     border.width: 1
                     radius: 5
+
+                    Text {
+                        text: "+"
+                        color: "white"
+                        font.pixelSize: buttonsTextSize
+                        anchors.centerIn: parent
+                    }
                 }
             }
 
@@ -513,18 +473,8 @@ Window {
                 Layout.column: 1
                 Layout.row: 4
                 id: _button0
-                text: "0"
                 onClicked: _txtInput.text += "0"
-                flat: true
-
-                contentItem: Text {
-                    text: _button0.text
-                    font: _button0.font
-                    color: _button0.down ? "#ffffff" : "#dddddd"
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    elide: Text.ElideRight
-                }
+                hoverEnabled: false
 
                 background: Rectangle {
                     implicitWidth: (_rect2.width / 4 - 10)
@@ -533,6 +483,13 @@ Window {
                     border.color: "#202020"
                     border.width: 1
                     radius: 5
+
+                    Text {
+                        text: "0"
+                        color: "white"
+                        font.pixelSize: buttonsTextSize
+                        anchors.centerIn: parent
+                    }
                 }
             }
 
@@ -540,18 +497,8 @@ Window {
                 Layout.column: 2
                 Layout.row: 4
                 id: _buttonDot
-                text: "."
                 onClicked: _txtInput.text += "."
-                flat: true
-
-                contentItem: Text {
-                    text: _buttonDot.text
-                    font: _buttonDot.font
-                    color: _buttonDot.down ? "#ffffff" : "#dddddd"
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    elide: Text.ElideRight
-                }
+                hoverEnabled: false
 
                 background: Rectangle {
                     implicitWidth: (_rect2.width / 4 - 10)
@@ -560,6 +507,13 @@ Window {
                     border.color: "#202020"
                     border.width: 1
                     radius: 5
+
+                    Text {
+                        text: "."
+                        color: "white"
+                        font.pixelSize: buttonsTextSize
+                        anchors.centerIn: parent
+                    }
                 }
             }
 
@@ -567,26 +521,23 @@ Window {
                 Layout.column: 3
                 Layout.row: 4
                 id: _buttonEqu
-                text: "="
                 onClicked: _txtInput.text += "="
-                flat: true
-
-                contentItem: Text {
-                    text: _buttonEqu.text
-                    font: _buttonEqu.font
-                    color: _buttonEqu.down ? "#ffffff" : "#dddddd"
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    elide: Text.ElideRight
-                }
+                hoverEnabled: false
 
                 background: Rectangle {
                     implicitWidth: (_rect2.width / 4 - 10)
                     implicitHeight: (_rect2.height / 5 - 10)
-                    color: _buttonEqu.down ? "#3b3b3b" : "#323232"
+                    color: _buttonEqu.down ? "#76b9ed" : "#6da9d8"
                     border.color: "#202020"
                     border.width: 1
                     radius: 5
+
+                    Text {
+                        text: "="
+                        color: "white"
+                        font.pixelSize: buttonsTextSize
+                        anchors.centerIn: parent
+                    }
                 }
             }
         }
