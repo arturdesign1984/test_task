@@ -5,7 +5,7 @@ project(test_task VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 6.2 REQUIRED COMPONENTS Quick)
+find_package(Qt6 6.2 REQUIRED COMPONENTS Core Quick Core5Compat )
 
 
 qt_add_executable(apptest_task
@@ -16,6 +16,7 @@ qt_add_qml_module(apptest_task
     URI test_task
     VERSION 1.0
     QML_FILES Main.qml
+    SOURCES calculate.h calculate.cpp
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
@@ -30,7 +31,7 @@ set_target_properties(apptest_task PROPERTIES
 )
 
 target_link_libraries(apptest_task
-    PRIVATE Qt6::Quick
+    PRIVATE Qt6::Core Qt6::Quick Qt6::Core5Compat
 )
 
 include(GNUInstallDirs)
