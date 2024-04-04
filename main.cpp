@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 
     Calculate cal;
 
-    cal.DoCalculation("5+5-6*2=02");
+    cal.DoCalculation("5+5-6/0=02");
 
     qDebug() << cal.getResult();
 

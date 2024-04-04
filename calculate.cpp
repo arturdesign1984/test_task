@@ -64,8 +64,13 @@ void Calculate::DoCalculation(QString someWork)
     MakeWorkList(someWork);
     result = firstOperand;
 
-    for(int i = 0; i < workList.size(); ++i){
-        result = DoIt(workList[i].first, result, workList[i].second);
+    try{
+        for(int i = 0; i < workList.size(); ++i){
+            result = DoIt(workList[i].first, result, workList[i].second);
+        }
+    }
+    catch (const std::logic_error ex){
+        qDebug() << "\e[31m!ERROR: " << ex.what() << "\e[0m\n";
     }
 }
 
