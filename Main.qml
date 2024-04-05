@@ -1,16 +1,25 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Fusion
+import QueueHandler 1.0
 
 
 
 Window {
+
+    QueueHandler{
+        id: _queueHandler
+        onQueueRequestsLengthChanged: _txtQueueReq.text = "Задачи: " + queueRequestsLength
+        onQueueResultsChanged: _txtQueueRes.text = "Результаты: " + queueResultsLength
+    }
+
     width: 320
     height: 480
     visible: true
     title: qsTr("Калькулятор")
 
     property real buttonsTextSize: 16
+
 
     Rectangle {
         id: _rect1
@@ -29,6 +38,28 @@ Window {
             validator: RegularExpressionValidator {
                 regularExpression: /^[0-9]+[.]?[0-9]*([-+/*]?[0-9]+[.]?[0-9]*)+[=]$/
             }
+        }
+
+        Text {
+            id: _txtQueueReq
+            leftPadding: 5
+            anchors.left: parent.left
+            anchors.top: parent.top
+            height: parent.height / 5
+            color: "#ffffff"
+            font.pointSize: 16
+            text: qsTr("Задачи: ")
+        }
+
+        Text {
+            id: _txtQueueRes
+            leftPadding: 5
+            anchors.left: parent.horizontalCenter
+            anchors.top: parent.top
+            height: parent.height / 5
+            color: "#ffffff"
+            font.pointSize: 16
+            text: "Результаты: "
         }
     }
 
@@ -469,6 +500,30 @@ Window {
                 }
             }
 
+            Rectangle {
+                implicitWidth: (_rect2.width / 4 - 10)
+                implicitHeight: (_rect2.height / 5 - 10)
+                color: _button0.down ? "#3b3b3b" : "#323232"
+                border.color: "#202020"
+                border.width: 1
+                radius: 5
+
+                Text {
+                    id: _delay
+                    text: qsTr("ЗАДЕРЖКА")
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.top: parent.top
+                    font.pixelSize: 10
+                    color: "#ffffff"
+                }
+                SpinBox {
+                    id: _spinBox
+                    anchors.top: _delay.bottom
+                    anchors.bottom: parent.bottom
+                    width: parent.width
+                }
+            }
+
             Button {
                 Layout.column: 1
                 Layout.row: 4
@@ -521,7 +576,13 @@ Window {
                 Layout.column: 3
                 Layout.row: 4
                 id: _buttonEqu
-                onClicked: _txtInput.text += "="
+                onClicked: {
+                    _txtInput.text += "="
+                    _txtInput.text += _rButtonIntLib.checked ? "0" : "1"
+                    _txtInput.text += _spinBox.value
+                    _queueHandler.addToQueueRequests(_txtInput.text)
+                    _txtInput.text = ""
+                }
                 hoverEnabled: false
 
                 background: Rectangle {

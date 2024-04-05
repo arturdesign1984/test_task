@@ -16,13 +16,18 @@ private:
 public:
     explicit Calculate(QObject *parent = nullptr);
 
-    double DoIt (TypeWork typeWork, double operandA, double operandB) noexcept(false);
-    void MakeWorkList(QString);
-    void DoCalculation(QString);
-    double getResult() const;
+    double doIt (TypeWork typeWork, double operandA, double operandB) noexcept(false);
+    void makeWorkList(QString);
+    void doCalculation(const QString);
+
+public slots:
+    void begin(QString);
+
+private slots:
+    void setNextWork();
 
 signals:
-    // emit AddToQueueResults(double);
+    void addToQueueResults(double);
 };
 
 #endif // CALCULATE_H

@@ -1,12 +1,13 @@
 #include "calculate.h"
 #include <QRegularExpression>
 #include <QDebug>
+#include <QThread>
 
 Calculate::Calculate(QObject *parent)
     : QObject{parent}
 {}
 
-double Calculate::DoIt(TypeWork typeWork, double operandA, double operandB) noexcept(false)
+double Calculate::doIt(TypeWork typeWork, double operandA, double operandB) noexcept(false)
 {
     switch (typeWork) {
     case addition:
@@ -27,7 +28,7 @@ double Calculate::DoIt(TypeWork typeWork, double operandA, double operandB) noex
     return 0;
 }
 
-void Calculate::MakeWorkList(QString work)
+void Calculate::makeWorkList(QString work)
 {
     QStringList numbersList = work.split(QRegularExpression("\\/|\\-|\\+|\\*|\\="));
     QList <TypeWork> operationList;
@@ -59,22 +60,35 @@ void Calculate::MakeWorkList(QString work)
     }
 }
 
-void Calculate::DoCalculation(QString someWork)
+void Calculate::doCalculation(const QString someWork)
 {
-    MakeWorkList(someWork);
+    int delayTime = someWork.sliced(someWork.indexOf("=")+1).toInt();
+    int librarySwitch = someWork.sliced(someWork.indexOf("="),1).toInt();
+    makeWorkList(someWork.sliced(0,someWork.indexOf("=")));
     result = firstOperand;
 
     try{
         for(int i = 0; i < workList.size(); ++i){
-            result = DoIt(workList[i].first, result, workList[i].second);
+            result = doIt(workList[i].first, result, workList[i].second);
         }
+        QThread::sleep(delayTime);
+        setNextWork();
     }
     catch (const std::logic_error ex){
         qDebug() << "\e[31m!ERROR: " << ex.what() << "\e[0m\n";
+        result = 0;
+        setNextWork();
     }
 }
 
-double Calculate::getResult() const
+void Calculate::begin(QString work)
 {
-    return result;
+    doCalculation(work);
+}
+
+void Calculate::setNextWork()
+{
+    emit addToQueueResults(result);
+    result = 0;
+    workList.clear();
 }
