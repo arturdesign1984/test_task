@@ -21,7 +21,6 @@ core
 !core/
 tags
 .DS_Store
-.directory
 *.debug
 Makefile*
 *.prl
@@ -67,4 +66,4 @@ CMakeLists.txt.user*
 # Python byte code
 *.pyc
 
-!*.png
+
