@@ -2,6 +2,7 @@
 #define CALCULATE_H
 
 #include <QObject>
+#include "DoITExt/include/doitext.h"
 
 class Calculate : public QObject
 {
@@ -12,6 +13,7 @@ private:
     QList <QPair <TypeWork, double>> workList;
     double firstOperand;
     double result;
+    DoItExt doItExtLib;
 
 public:
     explicit Calculate(QObject *parent = nullptr);

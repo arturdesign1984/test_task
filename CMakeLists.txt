@@ -19,6 +19,7 @@ qt_add_qml_module(apptest_task
     SOURCES calculate.h calculate.cpp
     SOURCES queuehandler.h queuehandler.cpp
     SOURCES queuethread.h queuethread.cpp
+
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
@@ -32,7 +33,13 @@ set_target_properties(apptest_task PROPERTIES
     WIN32_EXECUTABLE TRUE
 )
 
-target_link_libraries(apptest_task
+target_include_directories(apptest_task PUBLIC ${PROJECT_SOURCE_DIR}/DoITExt/include)
+
+target_link_directories(apptest_task PUBLIC ${PROJECT_SOURCE_DIR}/DoITExt/debug)
+
+target_link_directories(apptest_task PUBLIC ${PROJECT_SOURCE_DIR}/DoITExt/release)
+
+target_link_libraries(apptest_task PUBLIC DoItExt
     PRIVATE Qt6::Core Qt6::Quick Qt6::Core5Compat
 )
 

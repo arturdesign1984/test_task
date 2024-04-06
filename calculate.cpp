@@ -1,4 +1,5 @@
 #include "calculate.h"
+
 #include <QRegularExpression>
 #include <QDebug>
 #include <QThread>
@@ -69,7 +70,11 @@ void Calculate::doCalculation(const QString someWork)
 
     try{
         for(int i = 0; i < workList.size(); ++i){
-            result = doIt(workList[i].first, result, workList[i].second);
+            if(!librarySwitch){
+                result = doIt(workList[i].first, result, workList[i].second);
+            }else{
+                doItExtLib.doItExt(workList[i].first, result, workList[i].second);
+            }
         }
         QThread::sleep(delayTime);
         setNextWork();
