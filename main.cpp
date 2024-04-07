@@ -2,19 +2,13 @@
 #include <QQmlApplicationEngine>
 #include "calculate.h"
 #include "queuehandler.h"
-#include "queuethread.h"
+#include "mainwindowstate.h"
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
-    // Calculate cal();
-
-
-    // cal.doCalculation("5+5-6/2=02");
-
-    // qDebug() << cal.getResult();
-
+    qmlRegisterType<MainWindowState>("MainWindowState", 1, 0, "MainWindowState");
     qmlRegisterType<QueueHandler>("QueueHandler", 1, 0, "QueueHandler");
 
     QQmlApplicationEngine engine;

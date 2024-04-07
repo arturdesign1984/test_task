@@ -80,7 +80,7 @@ void Calculate::doCalculation(const QString someWork)
         setNextWork();
     }
     catch (const std::logic_error ex){
-        qDebug() << "\e[31m!ERROR: " << ex.what() << "\e[0m\n";
+        qWarning() << "\e[31m!ERROR: " << ex.what() << "\e[0m\n";
         result = 0;
         setNextWork();
     }

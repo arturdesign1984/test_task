@@ -2,10 +2,12 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Fusion
 import QueueHandler 1.0
+import MainWindowState 1.0
 
 
 
-Window {
+ApplicationWindow {
+    id: _window
 
     QueueHandler{
         id: _queueHandler
@@ -13,10 +15,21 @@ Window {
         onQueueResultsChanged: _txtQueueRes.text = "Результаты: " + queueResultsLength
     }
 
-    width: 320
-    height: 480
+    MainWindowState{
+        id: _mainWindowState
+    }
+
+    width: _mainWindowState.getWindowWidth()
+    height: _mainWindowState.getWindowHeight()
+    x: _mainWindowState.getWindowPositionX()
+    y: _mainWindowState.getWindowPositionY()
     visible: true
     title: qsTr("Калькулятор")
+    onWidthChanged: _mainWindowState.setWindowWidth(_window.width)
+    onHeaderChanged: _mainWindowState.setWindowHeight(_window.height)
+    onXChanged: _mainWindowState.setWindowPositionX(_window.x)
+    onYChanged: _mainWindowState.setWindowPositionY(_window.y)
+    onClosing: _mainWindowState.saveState();
 
     property real buttonsTextSize: 16
 
@@ -192,7 +205,10 @@ Window {
                 Layout.column: 3
                 Layout.row: 0
                 id: _buttonDev
-                onClicked: _txtInput.text += "/"
+                onClicked: {
+                    _txtInput.validator.changed()
+                    _txtInput.text += "/"
+                }
                 hoverEnabled: false
 
                 background: Rectangle {

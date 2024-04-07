@@ -19,6 +19,7 @@ qt_add_qml_module(apptest_task
     SOURCES calculate.h calculate.cpp
     SOURCES queuehandler.h queuehandler.cpp
     SOURCES queuethread.h queuethread.cpp
+    SOURCES mainwindowstate.h mainwindowstate.cpp
 
 )
 

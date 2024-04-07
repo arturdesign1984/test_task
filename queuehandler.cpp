@@ -15,7 +15,6 @@ void QueueHandler::addToQueueRequests(const QString& work)
 {
     emit addRequestToQueue(work);
     emit queueRequestsChanged(queueRequestsLength);
-    // qDebug() << work << " " << queueRequestsLength << "\n";
 }
 
 void QueueHandler::queueResultWorkDone(int length)

@@ -5,6 +5,7 @@
 #include <QThread>
 #include <QMutex>
 #include <QQueue>
+#include <QProcess>
 #include "calculate.h"
 
 class QueueThread : public QObject
@@ -12,6 +13,7 @@ class QueueThread : public QObject
     Q_OBJECT
 public:
     explicit QueueThread(QObject *parent = nullptr);
+    ~QueueThread();
 
 signals:
     void queueRequChanged(int);
@@ -30,6 +32,7 @@ private:
     Calculate* calculate;
     QThread* calculateThread;
     QMutex mtx;
+    QProcess* cmd;
 };
 
 #endif // QUEUETHREAD_H

@@ -10,6 +10,14 @@ QueueThread::QueueThread(QObject *parent)
     connect(this, SIGNAL(beginWork(QString)),calculate, SLOT(begin(QString)));
     calculate->moveToThread(calculateThread);
     calculateThread->start();
+
+}
+
+QueueThread::~QueueThread()
+{
+    calculateThread->terminate();
+    delete calculateThread;
+    delete calculate;
 }
 
 void QueueThread::addRequest(const QString work){
@@ -19,7 +27,7 @@ void QueueThread::addRequest(const QString work){
     if(queueRequests.length() == 1){
         emit beginWork(queueRequests.first());
     }
-    qDebug() << "\e[32mЗадача: " << work.sliced(0,work.indexOf("=")) << "\e[0m ";
+    qWarning() << "\e[32mЗадача: " << work.sliced(0,work.indexOf("=")) << "\e[0m ";
     mtx.unlock();
 }
 
@@ -42,7 +50,7 @@ void QueueThread::addResult(const double result){
 void QueueThread::showResults()
 {
     mtx.lock();
-    qDebug() << "\e[34mОтвет: " << queueRsults.first() << "\e[0m\n";
+    qWarning() << "\e[34mОтвет: " << queueRsults.first() << "\e[0m\n";
     queueRsults.pop_front();
     emit queueResuChanged(queueRsults.length());
     mtx.unlock();
