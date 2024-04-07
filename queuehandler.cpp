@@ -1,5 +1,6 @@
 #include "queuehandler.h"
 #include <QDebug>
+#include <QRegExp>
 
 QueueHandler::QueueHandler(QObject *parent) : QObject(parent)
 {
@@ -13,8 +14,16 @@ QueueHandler::QueueHandler(QObject *parent) : QObject(parent)
 
 void QueueHandler::addToQueueRequests(const QString& work)
 {
-    emit addRequestToQueue(work);
-    emit queueRequestsChanged(queueRequestsLength);
+    QRegExp re ("^[0-9]+[.]?[0-9]*([-+/*]?[0-9]+[.]?[0-9]*)+[=][0-9]+$");
+
+    if(re.exactMatch(work))
+    {
+        emit addRequestToQueue(work);
+        emit queueRequestsChanged(queueRequestsLength);
+    } else
+    {
+        qWarning() << "\e[31m!ERROR: Некорректный ввод \e[0m\n";
+    }
 }
 
 void QueueHandler::queueResultWorkDone(int length)
